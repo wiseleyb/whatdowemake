@@ -1,8 +1,8 @@
 class FacebookInfo < ActiveRecord::Base
   class << self
-    def find_or_create_by_user(user, auth_hash)
+  def update_user(user, auth_hash)
       if info = auth_hash['info']
-        fi = self.find_or_create_by_user_id(user.id)
+        fi = self.where(user_id: user.id).first_or_initialize
         #<OmniAuth::AuthHash::InfoHash email="wiseleyb@gmail.com"
         #first_name="Ben" image="http://graph.facebook.com/524355608/picture"
         #last_name="Wiseley" location="San Francisco, California" name="Ben
@@ -21,6 +21,7 @@ class FacebookInfo < ActiveRecord::Base
 
         fi.save
         fi
+      end
     end
   end
 end

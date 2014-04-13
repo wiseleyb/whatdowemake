@@ -2,13 +2,13 @@ class FacebookEducation < ActiveRecord::Base
   belongs_to :user
 
   class << self
-    def find_or_create_by_user(user, auth_hash)
+  def update_user(user, auth_hash)
       res = []
       if edus = auth_hash['extra'].try(:[], 'raw_info').try(:[], 'education')
         edus.each do |edu|
-          fe = self.find_or_create_by_user_id(user.id)
           if school = edu['school']
-            fe.school_uid = school['id']
+            fe = self.where(user_id: user.id,
+                            school_fid: school['id']).first_or_initialize
             fe.school = school['name']
           end
           fe.type = edu['type']

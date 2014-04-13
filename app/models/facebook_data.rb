@@ -1,15 +1,27 @@
 class FacebookData
   class << self
-    def record_user_facebook_data(user, auth_hash)
-      FacebookInfo.find_or_create_by_user(user, auth_hash)
-      FacebookExtra.find_or_create_by_user(user, auth_hash)
-      FacebookEducation.find_or_create_by_user(user, auth_hash)
-      FacebookWork.find_or_create_by_user(user, auth_hash)
+  def record_user(user, auth_hash)
+      puts 'fb info'
+      FacebookInfo.update_user(user, auth_hash)
+      puts 'fb extra'
+      FacebookExtra.update_user(user, auth_hash)
+      puts 'fb education'
+      FacebookEducation.update_user(user, auth_hash)
+      puts 'fb work'
+      FacebookWork.update_user(user, auth_hash)
     end
 
     def parse_facebook_location(location)
       # TODO: implement this
+     return unless location
       [location.split(','), 'US'].flatten.map(&:strip)
+    end
+
+    def destory_facebook_data(user)
+      user.facebook_info.destroy_all
+      user.facebook_extra.destroy_all
+      user.facebook_education.destroy_all
+      user.facebook_work.destroy_all
     end
   end
 end

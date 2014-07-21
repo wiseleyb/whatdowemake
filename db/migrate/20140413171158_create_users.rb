@@ -8,6 +8,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :token
       t.integer :token_expires_at
       t.text    :auth_hash
+      t.column  :fbdata, :json
+      t.float   :income
       t.timestamps
     end
   end

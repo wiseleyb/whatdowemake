@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413191407) do
+ActiveRecord::Schema.define(version: 20140720001321) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "facebook_education_concentrations", force: true do |t|
     t.integer  "facebook_education_id"
@@ -21,11 +25,11 @@ ActiveRecord::Schema.define(version: 20140413191407) do
     t.datetime "updated_at"
   end
 
-  add_index "facebook_education_concentrations", ["facebook_education_id"], name: "fb_ed_con_on_fb_ed_id"
+  add_index "facebook_education_concentrations", ["facebook_education_id"], name: "fb_ed_con_on_fb_ed_id", using: :btree
 
   create_table "facebook_educations", force: true do |t|
     t.integer  "user_id"
-    t.integer  "school_fid"
+    t.integer  "school_uid"
     t.string   "school"
     t.integer  "year"
     t.string   "concentration"
@@ -34,7 +38,7 @@ ActiveRecord::Schema.define(version: 20140413191407) do
     t.datetime "updated_at"
   end
 
-  add_index "facebook_educations", ["user_id"], name: "index_facebook_educations_on_user_id"
+  add_index "facebook_educations", ["user_id"], name: "index_facebook_educations_on_user_id", using: :btree
 
   create_table "facebook_extras", force: true do |t|
     t.integer  "user_id"
@@ -53,7 +57,7 @@ ActiveRecord::Schema.define(version: 20140413191407) do
     t.datetime "updated_at"
   end
 
-  add_index "facebook_extras", ["user_id"], name: "index_facebook_extras_on_user_id"
+  add_index "facebook_extras", ["user_id"], name: "index_facebook_extras_on_user_id", using: :btree
 
   create_table "facebook_infos", force: true do |t|
     t.integer  "user_id"
@@ -71,7 +75,7 @@ ActiveRecord::Schema.define(version: 20140413191407) do
     t.datetime "updated_at"
   end
 
-  add_index "facebook_infos", ["user_id"], name: "index_facebook_infos_on_user_id"
+  add_index "facebook_infos", ["user_id"], name: "index_facebook_infos_on_user_id", using: :btree
 
   create_table "facebook_works", force: true do |t|
     t.integer  "user_id"
@@ -92,7 +96,11 @@ ActiveRecord::Schema.define(version: 20140413191407) do
     t.datetime "updated_at"
   end
 
-  add_index "facebook_works", ["user_id"], name: "index_facebook_works_on_user_id"
+  add_index "facebook_works", ["user_id"], name: "index_facebook_works_on_user_id", using: :btree
+
+  create_table "hstores", force: true do |t|
+    t.hstore "fbdata"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"

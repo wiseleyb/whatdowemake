@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       end
       user.auth_hash = auth
     end
-    FacebookData.record_user(user, user.auth_hash)
+    #FacebookData.record_user(user, user.auth_hash)
     user
   end
 end
